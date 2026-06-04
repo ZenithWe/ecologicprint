@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecologic Print – Suprimentos e Serviços</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #0a3d1f;
+    --green-mid: #155a2e;
+    --green-accent: #1e8a45;
+    --green-light: #3ab85e;
+    --blue-accent: #1a6fa8;
+    --gold: #c8a832;
+    --off-white: #f4f2ec;
+    --text-dark: #1a1a18;
+    --text-mid: #3d4035;
+    --border: rgba(30,138,69,0.18);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,61,31,0.96);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+    border-bottom: 1px solid rgba(200,168,50,0.3);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 42px; width: 42px; object-fit: contain; }
+  .nav-logo-text { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; color: #fff; letter-spacing: 0.04em; line-height: 1.1; }
+  .nav-logo-sub { font-size: 0.65rem; color: var(--gold); font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--green-accent); color: #fff; padding: 8px 18px;
+    border-radius: 4px; text-decoration: none; font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-light); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--green-dark) 0%, #0d2e4a 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 100px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(26,111,168,0.15) 0%, transparent 65%);
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; max-width: 1100px; width: 100%; position: relative;
+  }
+  .hero-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 700; line-height: 1.0; color: #fff;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    margin-bottom: 1.4rem;
+  }
+  h1 em { color: var(--green-light); font-style: normal; }
+  .hero-desc {
+    color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7;
+    font-weight: 300; max-width: 440px; margin-bottom: 2rem;
+  }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green-accent); color: #fff;
+    padding: 13px 28px; border-radius: 4px; text-decoration: none;
+    font-weight: 700; font-size: 0.88rem; letter-spacing: 0.07em; text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--green-light); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.3); color: #fff;
+    padding: 13px 28px; border-radius: 4px; text-decoration: none;
+    font-weight: 600; font-size: 0.88rem; letter-spacing: 0.07em; text-transform: uppercase;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(200,168,50,0.08); }
+  .hero-logo-big {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-logo-big img {
+    width: min(380px, 90%); filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  .hero-stats {
+    display: flex; gap: 2rem; margin-top: 2.5rem;
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--green-accent);
+    display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem;
+  }
+  .section-label::before { content: ''; width: 24px; height: 1.5px; background: var(--green-accent); }
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700; line-height: 1.1; color: var(--green-dark);
+    text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 1rem;
+  }
+  .section-intro { color: var(--text-mid); font-size: 1rem; line-height: 1.7; font-weight: 300; max-width: 560px; margin-bottom: 3rem; }
+
+  /* SERVICES */
+  #servicos { background: #fff; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.5px; background: var(--border);
+    border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden;
+  }
+  .service-card {
+    background: #fff; padding: 2rem 1.75rem;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .service-card:hover { background: #f7fdf9; }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 6px;
+    background: #edf7f0; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem; font-size: 1.5rem;
+  }
+  .service-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--green-dark); margin-bottom: 0.6rem;
+  }
+  .service-card p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+
+  /* PRODUCTS */
+  #produtos { background: var(--off-white); }
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;
+  }
+  .product-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.75rem 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(10,61,31,0.1); }
+  .product-tag {
+    display: inline-block; background: #edf7f0; color: var(--green-accent);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 3px; margin-bottom: 1rem;
+  }
+  .product-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--green-dark); margin-bottom: 0.5rem;
+  }
+  .product-card p { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; margin-bottom: 1.2rem; }
+  .btn-comprar {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #25d366; color: #fff;
+    padding: 9px 18px; border-radius: 4px; text-decoration: none;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .btn-comprar:hover { background: #1fb556; }
+  .btn-comprar svg { width: 16px; height: 16px; }
+
+  /* CONTACT */
+  #contato { background: var(--green-dark); color: #fff; }
+  #contato h2 { color: #fff; }
+  #contato .section-label { color: var(--gold); }
+  #contato .section-label::before { background: var(--gold); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .contact-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.75rem; }
+  .contact-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: rgba(255,255,255,0.08); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  }
+  .contact-label { font-size: 0.72rem; color: var(--gold); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+  .contact-value { color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.5; }
+  .contact-value a { color: rgba(255,255,255,0.85); text-decoration: none; }
+  .contact-value a:hover { color: var(--gold); }
+  .map-embed {
+    border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12);
+  }
+  .map-embed iframe { width: 100%; height: 280px; border: 0; display: block; }
+
+  /* FOOTER */
+  footer {
+    background: #061a0d; color: rgba(255,255,255,0.4);
+    padding: 1.5rem 2rem; text-align: center;
+    font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* CHATBOT */
+  #chat-fab {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--green-accent);
+    box-shadow: 0 4px 20px rgba(30,138,69,0.4);
+    border: none; cursor: pointer; font-size: 1.6rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  #chat-fab:hover { background: var(--green-light); transform: scale(1.06); }
+  #chat-fab .badge {
+    position: absolute; top: -2px; right: -2px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--gold); color: #000; font-size: 0.6rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  #chat-window {
+    position: fixed; bottom: 100px; right: 28px; z-index: 200;
+    width: 360px; max-height: 540px;
+    background: #fff; border-radius: 14px;
+    box-shadow: 0 16px 60px rgba(0,0,0,0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.85) translateY(20px);
+    transform-origin: bottom right;
+    opacity: 0; pointer-events: none;
+    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+  }
+  #chat-window.open {
+    transform: scale(1) translateY(0);
+    opacity: 1; pointer-events: all;
+  }
+  .chat-header {
+    background: var(--green-dark);
+    padding: 14px 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .chat-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--green-accent); overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chat-avatar img { width: 100%; height: 100%; object-fit: contain; }
+  .chat-header-info { flex: 1; }
+  .chat-header-name { color: #fff; font-weight: 700; font-size: 0.9rem; }
+  .chat-header-status { color: #6ee897; font-size: 0.72rem; display: flex; align-items: center; gap: 4px; }
+  .chat-header-status::before { content: ''; width: 6px; height: 6px; background: #6ee897; border-radius: 50%; display: inline-block; }
+  .chat-close { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 1.2rem; padding: 4px; line-height: 1; transition: color 0.15s; }
+  .chat-close:hover { color: #fff; }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+    background: #f7fdf9;
+  }
+  .msg { display: flex; flex-direction: column; max-width: 85%; }
+  .msg.bot { align-self: flex-start; }
+  .msg.user { align-self: flex-end; align-items: flex-end; }
+  .msg-bubble {
+    padding: 10px 14px; border-radius: 12px;
+    font-size: 0.88rem; line-height: 1.5;
+  }
+  .bot .msg-bubble {
+    background: #fff; color: var(--text-dark);
+    border: 1px solid var(--border); border-bottom-left-radius: 3px;
+  }
+  .user .msg-bubble {
+    background: var(--green-accent); color: #fff;
+    border-bottom-right-radius: 3px;
+  }
+  .msg-time { font-size: 0.68rem; color: #aaa; margin-top: 3px; padding: 0 4px; }
+  .chat-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 4px;
+    background: #f7fdf9; border-top: 1px solid #e8f5ec;
+  }
+  .chip {
+    background: #fff; border: 1px solid var(--border); border-radius: 20px;
+    padding: 5px 12px; font-size: 0.76rem; color: var(--green-accent);
+    cursor: pointer; font-weight: 600; transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .chip:hover { background: #edf7f0; }
+  .chat-input-area {
+    display: flex; gap: 8px; padding: 12px 14px;
+    background: #fff; border-top: 1px solid #e8f5ec;
+  }
+  #chat-input {
+    flex: 1; border: 1px solid #d4e8d8; border-radius: 8px;
+    padding: 9px 12px; font-size: 0.86rem; font-family: 'Barlow', sans-serif;
+    outline: none; color: var(--text-dark); background: #f7fdf9;
+    transition: border-color 0.2s;
+  }
+  #chat-input:focus { border-color: var(--green-accent); }
+  #chat-send {
+    background: var(--green-accent); color: #fff; border: none;
+    border-radius: 8px; padding: 9px 14px; cursor: pointer;
+    font-size: 1rem; transition: background 0.2s; line-height: 1;
+  }
+  #chat-send:hover { background: var(--green-light); }
+  .typing-indicator { display: flex; align-items: center; gap: 4px; padding: 6px 2px; }
+  .typing-dot { width: 7px; height: 7px; background: #b0cdb7; border-radius: 50%; animation: bounce 1.3s infinite; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-7px)} }
+
+  .wpp-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #25d366; color: #fff; padding: 7px 14px;
+    border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.82rem;
+    margin-top: 6px; width: fit-content;
+  }
+  .wpp-link:hover { background: #1fb556; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+    .hero-logo-big { order: -1; }
+    .hero-logo-big img { width: 200px; }
+    .hero-btns { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-label { justify-content: center; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    #chat-window { width: calc(100vw - 40px); right: 20px; bottom: 90px; }
+    h1 { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Ecologic Print" onerror="this.style.display='none'">
+    <div>
+      <div class="nav-logo-text">Ecologic Print</div>
+      <div class="nav-logo-sub">Suprimentos e Serviços</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#produtos">Produtos</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5531999999999" class="nav-cta" target="_blank">💬 WhatsApp</a>
+  <div class="hamburger" onclick="document.querySelector('.nav-links').style.display='flex'">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-label">Nova Lima — MG</div>
+      <h1>Tecnologia &<br><em>Impressão</em><br>de Qualidade</h1>
+      <p class="hero-desc">
+        Manutenção de computadores, redes corporativas, recargas de toner, impressões e muito mais. 
+        Atendimento especializado para sua empresa e residência.
+      </p>
+      <div class="hero-btns">
+        <a href="#servicos" class="btn-primary">Ver Serviços</a>
+        <a href="https://wa.me/5531999999999" class="btn-outline" target="_blank">📱 Fale Conosco</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">+10</div>
+          <div class="stat-label">Anos de experiência</div>
+        </div>
+        <div>
+          <div class="stat-num">13</div>
+          <div class="stat-label">Serviços e produtos</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Garantia</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-logo-big">
+      <img src="logo.png" alt="Ecologic Print" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNTAiIHI9IjEzMCIgZmlsbD0iIzFhNmZhOCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iMTEwIiBmaWxsPSIjMWU4YTQ1Ii8+PHRleHQgeD0iMTUwIiB5PSIxNjUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVDT0xPR0lDPC90ZXh0Pjwvc3ZnPg=='">
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="container">
+    <div class="section-label">O que fazemos</div>
+    <h2>Nossos Serviços</h2>
+    <p class="section-intro">Soluções completas de informática e impressão para empresas e residências em Nova Lima e região.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🖥️</div>
+        <h3>Manutenção de Computadores e Notebooks</h3>
+        <p>Técnicos altamente capacitados para manutenção preventiva, corretiva e upgrade no seu notebook ou desktop. Resolvemos de forma prática todos os problemas de informática.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Redes Corporativas e Residenciais</h3>
+        <p>Gestão da rede de computadores com Windows e Linux para pequenas ou grandes empresas. Larga experiência em servidores e firewalls.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🖨️</div>
+        <h3>Recargas de Toners e Cartuchos</h3>
+        <p>Realizamos recargas com insumos importados de alta qualidade, exaustivamente testados em nosso laboratório.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📄</div>
+        <h3>Impressões e Cópias</h3>
+        <p>Serviços de impressão e xerox com a maior qualidade e excelência no atendimento. Sempre priorizando a satisfação do cliente.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔵</div>
+        <h3>Confecção de Carimbos</h3>
+        <p>Confeccionamos carimbos de todos os modelos e tamanhos. Possuímos laboratório próprio para garantir qualidade e rapidez na entrega.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>Suporte Técnico Especializado</h3>
+        <p>Atendimento de segunda a sexta, das 8h às 18h. Nossa equipe está pronta para resolver qualquer demanda de TI da sua empresa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section id="produtos">
+  <div class="container">
+    <div class="section-label">Loja</div>
+    <h2>Nossos Produtos</h2>
+    <p class="section-intro">Produtos com qualidade comprovada, garantia e os melhores preços para você e sua empresa.</p>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-tag">Informática</div>
+        <h3>Computadores Novos e Seminovos</h3>
+        <p>Com a especificação certa para cada uso, novos ou seminovos e com garantia!</p>
+        <a href="https://wa.me/5531354209640?text=Olá! Tenho interesse em Computadores Novos/Seminovos" class="btn-comprar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+          Comprar via WhatsApp
+        </a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">Acessórios</div>
+        <h3>Suprimentos de Informática</h3>
+        <p>Mouse, teclado, fones, carregadores para todos os telefones, caixas de som, carregadores de notebook e muito mais.</p>
+        <a href="https://wa.me/5531354209640?text=Olá! Tenho interesse em Suprimentos de Informática" class="btn-comprar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+          Comprar via WhatsApp
+        </a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">Impressão</div>
+        <h3>Cartuchos e Toners</h3>
+        <p>Compatíveis e originais, vários modelos com garantia e qualidade comprovada para todas as marcas.</p>
+        <a href="https://wa.me/5531354209640?text=Olá! Tenho interesse em Cartuchos e Toners" class="btn-comprar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+          Comprar via WhatsApp
+        </a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">Impressão</div>
+        <h3>Impressoras Seminovas</h3>
+        <p>Alta qualidade de impressão, totalmente revisadas e com garantia. Ótima relação custo-benefício.</p>
+        <a href="https://wa.me/5531354209640?text=Olá! Tenho interesse em Impressoras Seminovas" class="btn-comprar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+          Comprar via WhatsApp
+        </a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">EcoTank</div>
+        <h3>Refil EcoTank</h3>
+        <p>Todas as cores de refis para todas as impressoras EcoTank. Qualidade e rendimento garantidos.</p>
+        <a href="https://wa.me/5531354209640?text=Olá! Tenho interesse em Refil EcoTank" class="btn-comprar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+          Comprar via WhatsApp
+        </a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">Personalizado</div>
+        <h3>Confecção de Carimbos</h3>
+        <p>Todos os modelos e tamanhos. Laboratório próprio para confecção com qualidade e rapidez na entrega.</p>
+        <a href="https://wa.me/5531354209640?text=Olá! Tenho interesse em Confecção de Carimbos" class="btn-comprar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+          Comprar via WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="section-label">Fale conosco</div>
+    <h2>Contato</h2>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Telefone</div>
+            <div class="contact-value"><a href="tel:+553135420964">(31) 3542-0964</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Horário de Atendimento</div>
+            <div class="contact-value">Segunda a Sexta<br>8h00 às 18h00</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Endereço</div>
+            <div class="contact-value">
+              Rua Lauro Magalhães Santeiro, 44<br>
+              Loja 2 e 3 — Bairro Bom Jardim<br>
+              34003-220 — Nova Lima/MG
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">E-mail</div>
+            <div class="contact-value"><a href="mailto:ecologicprint@ecologicprint.com.br">ecologicprint@ecologicprint.com.br</a></div>
+          </div>
+        </div>
+        <a href="https://wa.me/5531354209640" class="btn-primary" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin-top:1rem;">
+          💬 Falar pelo WhatsApp
+        </a>
+      </div>
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.5!2d-43.845!3d-19.985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDU5JzA2LjAiUyA0M8KwNTAnNDIuMCJX!5e0!3m2!1spt!2sbr!4v1620000000000"
+          allowfullscreen="" loading="lazy" title="Localização Ecologic Print"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Ecologic Print — Suprimentos e Serviços | Nova Lima, MG | <a href="tel:+553135420964">(31) 3542-0964</a></p>
+</footer>
+
+<!-- CHAT FAB -->
+<button id="chat-fab" onclick="toggleChat()" aria-label="Abrir assistente">
+  <span>🤖</span>
+  <div class="badge">1</div>
+</button>
+
+<!-- CHAT WINDOW -->
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">
+      <img src="logo.png" alt="Bot" onerror="this.parentElement.innerHTML='🌿'">
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Assistente Ecologic Print</div>
+      <div class="chat-header-status">Online agora</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()" aria-label="Fechar">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-chips" id="chat-chips">
+    <div class="chip" onclick="sendChip(this.textContent)">🖥️ Manutenção de PC</div>
+    <div class="chip" onclick="sendChip(this.textContent)">🖨️ Recarga de toner</div>
+    <div class="chip" onclick="sendChip(this.textContent)">🌐 Redes</div>
+    <div class="chip" onclick="sendChip(this.textContent)">💰 Preços</div>
+    <div class="chip" onclick="sendChip(this.textContent)">📍 Localização</div>
+  </div>
+  <div class="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button id="chat-send" onclick="sendMessage()" aria-label="Enviar">➤</button>
+  </div>
+</div>
+
+<script>
+const WPP_NUMBER = '5531354209640';
+const WPP_BASE = 'https://wa.me/' + WPP_NUMBER;
+
+let chatOpen = false;
+let conversationHistory = [];
+let badgeRemoved = false;
+
+const SYSTEM_PROMPT = `Você é o assistente virtual da Ecologic Print, uma empresa em Nova Lima/MG especializada em suprimentos e serviços de informática. Responda sempre em português brasileiro, de forma cordial, objetiva e prestativa.
+
+INFORMAÇÕES DA EMPRESA:
+Nome: Ecologic Print – Suprimentos e Serviços
+Telefone: (31) 3542-0964
+WhatsApp: +55 31 3542-0964
+E-mail: ecologicprint@ecologicprint.com.br
+Endereço: Rua Lauro Magalhães Santeiro, 44, Loja 2 e 3, Bairro Bom Jardim, 34003-220 - Nova Lima/MG
+Horário: Segunda a Sexta, 8h00 às 18h00
+
+SERVIÇOS:
+1. Manutenção preventiva, corretiva e upgrade em computadores e notebooks
+2. Implantação e configuração de redes corporativas e residenciais (Windows e Linux, servidores, firewalls)
+3. Recargas de cartuchos e toners com insumos importados de alta qualidade
+4. Impressões e cópias (impressão e xerox)
+5. Confecção de carimbos de todos os modelos e tamanhos
+
+PRODUTOS:
+- Computadores novos e seminovos com garantia
+- Suprimentos de informática (mouse, teclado, fones, carregadores, caixas de som, carregadores de notebook)
+- Cartuchos e toners compatíveis e originais, vários modelos com garantia
+- Impressoras seminovas totalmente revisadas com garantia
+- Refil EcoTank (todas as cores para todas as impressoras EcoTank)
+- Carimbos personalizados
+
+REGRAS IMPORTANTES:
+- Quando o usuário quiser COMPRAR algum produto ou contratar um serviço, SEMPRE redirecione para o WhatsApp com link clicável
+- Para compras, gere uma mensagem pré-formatada para o WhatsApp com o produto/serviço de interesse
+- Não invente preços. Se perguntarem sobre preços, diga que os preços variam conforme o modelo/necessidade e convide a entrar em contato via WhatsApp ou telefone para orçamento
+- Seja sempre simpático e use até 3 parágrafos curtos nas respostas
+- Se não souber algo específico, redirecione para o contato da empresa`;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-window').classList.toggle('open', chatOpen);
+  if (chatOpen && !badgeRemoved) {
+    document.querySelector('#chat-fab .badge').style.display = 'none';
+    badgeRemoved = true;
+    setTimeout(() => addBotMessage(null, true), 300);
+  }
+  if (chatOpen) {
+    setTimeout(() => document.getElementById('chat-input').focus(), 400);
+  }
+}
+
+function getTime() {
+  return new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+}
+
+function addBotMessage(text, isWelcome = false) {
+  const msgs = document.getElementById('chat-messages');
+  if (isWelcome) {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.innerHTML = `<div class="msg-bubble">Olá! 👋 Sou o assistente da <strong>Ecologic Print</strong>.<br><br>Posso te ajudar com informações sobre nossos serviços e produtos. Se quiser comprar ou solicitar um orçamento, te direciono para o nosso WhatsApp!<br><br>Como posso ajudar?</div><div class="msg-time">${getTime()}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return;
+  }
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${getTime()}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${getTime()}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typing-msg';
+  div.innerHTML = `<div class="msg-bubble"><div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-msg');
+  if (t) t.remove();
+}
+
+function makeWppLink(msg) {
+  const encoded = encodeURIComponent(msg);
+  return `${WPP_BASE}?text=${encoded}`;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addUserMessage(text);
+  conversationHistory.push({ role: 'user', content: text });
+  showTyping();
+  document.getElementById('chat-send').disabled = true;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Desculpe, não consegui processar sua mensagem. Por favor, entre em contato pelo WhatsApp!';
+    conversationHistory.push({ role: 'assistant', content: reply });
+    removeTyping();
+
+    const wppKeywords = ['comprar', 'quero', 'preciso', 'orçamento', 'orçar', 'valor', 'preço', 'quanto', 'adquirir', 'contratar', 'compra', 'pedir'];
+    const lowerText = text.toLowerCase();
+    const wantsToBy = wppKeywords.some(k => lowerText.includes(k));
+
+    let htmlReply = reply.replace(/\n/g, '<br>');
+
+    if (wantsToBy) {
+      const wppMsg = `Olá! Vi no site e tenho interesse: ${text}`;
+      htmlReply += `<br><br><a class="wpp-link" href="${makeWppLink(wppMsg)}" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.524 5.855L0 24l6.29-1.499A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.001-1.372l-.358-.213-3.738.891.942-3.633-.233-.374A9.789 9.789 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.417 0 9.818 4.4 9.818 9.818 0 5.417-4.401 9.818-9.818 9.818z"/></svg>
+        Abrir WhatsApp
+      </a>`;
+    }
+
+    addBotMessage(htmlReply);
+  } catch (e) {
+    removeTyping();
+    const wppMsg = 'Olá! Gostaria de mais informações sobre produtos e serviços da Ecologic Print.';
+    addBotMessage(`Ops, tive um problema técnico! 😅 Mas pode falar com a gente diretamente:<br><br><a class="wpp-link" href="${makeWppLink(wppMsg)}" target="_blank">💬 Abrir WhatsApp</a>`);
+  }
+  document.getElementById('chat-send').disabled = false;
+}
+
+function sendChip(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+</script>
+
+</body>
+</html>
